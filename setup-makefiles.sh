@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 #
 # Copyright (C) 2016 The CyanogenMod Project
 # Copyright (C) 2017-2020 The LineageOS Project
@@ -22,7 +22,9 @@ if [ ! -f "${HELPER}" ]; then
     echo "Unable to find helper script at ${HELPER}"
     exit 1
 fi
-source "${HELPER}"# Initialize the helper
+source "${HELPER}"
+
+# Initialize the helper
 setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}"
 
 # Warning headers and guards
