@@ -8,8 +8,7 @@
 
 set -e
 
-DEVICE=camera
-DEVICE_COMMON=camera
+DEVICE=moonstone
 VENDOR=xiaomi
 
 # Load extract_utils and do some sanity checks
