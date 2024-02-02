@@ -8,8 +8,8 @@
 
 set -e
 
-DEVICE=common
-VENDOR=xiaomi/stone-miuicamera
+DEVICE=moonstone
+VENDOR=xiaomi
 
 # Load extract_utils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
@@ -55,19 +55,14 @@ fi
 
 function blob_fixup() {
     case "${1}" in
-        system/lib64/libgui-xiaomi.so)
-            patchelf --set-soname libgui-xiaomi.so "${2}"
-            ;;
         system/lib64/libcamera_algoup_jni.xiaomi.so|system/lib64/libcamera_mianode_jni.xiaomi.so)
-            patchelf --replace-needed libgui.so libgui-xiaomi.so "${2}"
+            patchelf --add-needed libgui_shim_miuicamera.so "${2}"
+            ;;
+        system/lib64/libmicampostproc_client.so)
+            patchelf --remove-needed libhidltransport.so "${2}"
             ;;
     esac
 }
-
-if [ -z "$SRC" ]; then
-    echo "Path to system dump not specified! Specify one with --path"
-    exit 1
-fi
 
 # Initialize the helper
 setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}" false "${CLEAN_VENDOR}"
